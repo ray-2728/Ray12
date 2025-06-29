@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untuk Rara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      font-family: 'Great Vibes', cursive;
+      color: #ffc0cb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }.container {
+  position: relative;
+  max-width: 90%;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
+}
+
+.typing-text {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+  font-size: 36px;
+  color: #ffb6c1;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px 24px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.instruction {
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: 'Roboto Mono', monospace;
+  color: #aaa;
+}
+
+.emoji {
+  position: absolute;
+  font-size: 24px;
+  animation: floatDown 6s linear infinite;
+}
+
+@keyframes floatDown {
+  0% { top: -30px; opacity: 1; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+.wedding-animation {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 26px;
+  text-align: center;
+  color: #fff0f5;
+  animation: fadeInUp 2s ease-in-out forwards;
+  display: none;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translate(-50%, 30px); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+#blackout {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  z-index: 9999;
+}
+
+  </style>
+</head>
+<body>
+  <div id="blackout"></div>
+  <div class="container">
+    <div class="image-container">
+      <img src="2fb249ee4c9c036305a6239fa2b224a0.jpg" alt="Untuk Rara" />
+      <div class="typing-text" id="typed-text"></div>
+      <div class="wedding-animation" id="wedding-animation">
+        ❤️ Hari Bahagia Kita Akan Datang ❤️<br />
+        👰‍♂️ ❤️ 💍 ❤️ 👫‍❤️
+      </div>
+    </div>
+    <div class="instruction">Klik di mana saja untuk memutar musik 🎵</div>
+  </div><audio id="bg-music" src="ssstik.io_1751190473970_20250629_164819.mp3"></audio>
+
+  <script>
+    const textList = [
+      "Aku mencintaimu, Rara 💖",
+      "Terima kasih untuk setiap tawa dan air mata yang kita lewati bersama 🌟",
+      "Kamu adalah rumah terindah dalam hidupku 🏡",
+      "Kenangan bersamamu tak akan pernah pudar ✨",
+      "Di setiap detak jantungku, ada namamu 💓"
+    ];
+
+    let i = 0;
+    let j = 0;
+    let isDeleting = false;
+    const typedText = document.getElementById("typed-text");
+    const weddingAnim = document.getElementById("wedding-animation");
+
+    function typeWriter() {
+      if (i < textList.length) {
+        const current = textList[i];
+        if (!isDeleting) {
+          typedText.textContent = current.substring(0, j++);
+          if (j > current.length) {
+            isDeleting = true;
+            setTimeout(typeWriter, 2000);
+            return;
+          }
+        } else {
+          typedText.textContent = current.substring(0, j--);
+          if (j === 0) {
+            isDeleting = false;
+            i++;
+            if (i === textList.length) {
+              typedText.style.display = 'none';
+              weddingAnim.style.display = 'block';
+              return;
+            }
+          }
+        }
+        setTimeout(typeWriter, isDeleting ? 40 : 80);
+      }
+    }
+
+    typeWriter();
+
+    document.body.addEventListener('click', () => {
+      const music = document.getElementById("bg-music");
+      if (music.paused) music.play();
+    });
+
+    setInterval(() => {
+      const emoji = document.createElement("div");
+      emoji.className = "emoji";
+      emoji.innerText = "💌";
+      emoji.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 6000);
+    }, 1200);
+
+    // Anti Screenshot & Developer Tools
+    document.addEventListener('keyup', function(e) {
+      if (e.key === 'PrintScreen') {
+        navigator.clipboard.writeText('');
+        document.getElementById('blackout').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('blackout').style.display = 'none';
+        }, 2000);
+      }
+    });
+
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      alert("Klik kanan dinonaktifkan.");
+    });
+
+    document.onkeydown = function(e) {
+      if (
+        e.keyCode == 123 ||
+        (e.ctrlKey && e.shiftKey && e.keyCode == 73)
+      ) {
+        return false;
+      }
+    }
+  </script></body>
+</html>
